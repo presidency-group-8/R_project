@@ -46,17 +46,17 @@ preprocessing = function(){
 
 
 training = function(train_set){
-  print("TRAINING")
   # model = rpart(formula = stroke~., data = train_set)
   model = glm(formula = stroke ~ ., data = train_set)
+  print("TRAINING DONE")
   return(model)
 }
 
 
 testing = function(test_set, model){
-  print("TESTING")
   result = predict(model, test_set)
   result = (table(ActualValue=test_set$stroke, PreditedValue=result>=0.7))
+  print("TESTING DONE")
   print("Confusion Matrix")
   print(result)
 }
