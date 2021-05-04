@@ -92,6 +92,7 @@ evaluate = function(){
     if(ok$run() == GtkResponseType["ok"]) ok$destroy()
     return("error")
   }
+
   bmi = as.numeric(bmi)
   if (is.na(bmi) || bmi < 0){
     ok = gtkMessageDialog(window, "destroy-with-parent", "error",  "ok", "Please enter a valid BMI")
