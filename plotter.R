@@ -45,6 +45,7 @@ preprocessing = function(){
 
 dataset = preprocessing()
 
+# Uncomment the required plot to vizualize
 
 # Pie to analyze Class labels
 # stroke_1 = nrow(dataset[dataset$stroke == 1,])
