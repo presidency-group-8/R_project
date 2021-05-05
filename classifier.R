@@ -1,5 +1,3 @@
-library(caTools)
-library(party)
 library(rpart)
 library(rpart.plot)
 
@@ -121,5 +119,10 @@ predictor = function(age, gender, ever_married, work_type, residence_type, hyper
 
 # Perform pre processing
 data_set = preprocessing()
+
 # load the model
+model = rpart(formula = stroke ~ ., data = data_set)
+rpart.plot(model)
+
 model = glm(formula = stroke ~ ., data = data_set)
+
