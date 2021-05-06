@@ -27,12 +27,13 @@ evaluate = function(){
   }
   age = as.integer(age)
   if (is.na(age) || age < 0 || age > 110){
-    age = trunc(a)
     ok = gtkMessageDialog(window, "destroy-with-parent", "error",  "ok", "Please enter your age properly")
     if(ok$run() == GtkResponseType["ok"]) ok$destroy()
     return("error")
   }
-  
+  else{
+    age = trunc(age)
+  }
   if(gender == "--Select--"){
     ok = gtkMessageDialog(window, "destroy-with-parent", "error",  "ok", "Please select your gender")
     if(ok$run() == GtkResponseType["ok"]) ok$destroy()
@@ -92,7 +93,6 @@ evaluate = function(){
     if(ok$run() == GtkResponseType["ok"]) ok$destroy()
     return("error")
   }
-
   bmi = as.numeric(bmi)
   if (is.na(bmi) || bmi < 0){
     ok = gtkMessageDialog(window, "destroy-with-parent", "error",  "ok", "Please enter a valid BMI")
@@ -138,15 +138,7 @@ submit_function = function(){
   
   if (loading$run() == GtkResponseType["ok"]){
     loading$destroy()  
-    result = predictor(age, gender, ever_married, work_type, residence_type, hypertension, heart_disease, smoking_type, glucose, bmi)
-    if(result<0.0) risk = "extremely low"
-    if(result>0.0 && result<=0.13) risk = "low"
-    if(result>0.13 && result<=0.38) risk = "moderate"
-    if(result>0.38 && result<=0.75) risk = "high"
-    if(result>0.75) risk = "extremely high"
-    result = paste("Dear ", gtkEntryGetText(name), ", The risk of you having a stroke in the future is ", risk)
-    show = gtkMessageDialog(window, "destroy-with-parent", "info",  "ok", result)
-    if (show$run() == GtkResponseType["ok"])  show$destroy()
+    predictor(name, age, gender, ever_married, work_type, residence_type, hypertension, heart_disease, smoking_type, glucose, bmi)
   }
   
   else{
