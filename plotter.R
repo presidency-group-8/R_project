@@ -60,27 +60,36 @@ dataset = preprocessing()
 # Scatter plot to analyze Age vs stroke
 # ggplot(data=dataset, aes(x=stroke, y=age, color="green")) + geom_point()
 
+stroke_positive = dataset[dataset$stroke == 1,]
+
 # Bar to analyze Gender
 # qplot(data=dataset, x=gender, main="Gender", bins=3)
+# qplot(data=stroke_positive, x=gender, main="Gender with Stroke", bins=3)
 
 # Bar to analyze Hypertension
 # qplot(data=dataset, x=hyper, main="Hypertension", bins=3)
+# qplot(data=stroke_positive, x=hyper, main="Hypertension with Stroke", bins=3)
 
 # Bar to analyze Heart Disease
 # qplot(data=dataset, x=heart, main="Heart Disease", bins=3)
+# qplot(data=stroke_positive, x=heart, main="Heart Disease with Stroke", bins=3)
 
 # Bar to analyze Marital
 # qplot(data=dataset, x=marital, main="Ever Married", bins=4)
+# qplot(data=stroke_positive, x=marital, main="Ever Married with Stroke", bins=4)
 
 # Bar to analyze Work type
 # qplot(data=dataset, x=worktype, main="Work Type", bins=4)
+# qplot(data=stroke_positive, x=worktype, main="Work Type with Stroke", bins=4)
 
 # Bar to analyze Residence type
 # qplot(data=dataset, x=residence, main="Residence Type", bins=4)
+# qplot(data=stroke_positive, x=residence, main="Residence Type with Stroke", bins=4)
 
-# Bar to analyze Residence type
+# Bar to analyze Smoking status
 # qplot(data=dataset, x=smoking, main="Smoking Status", bins=5)
- 
+# qplot(data=stroke_positive, x=smoking, main="Smoking Status with Stroke", bins=5)
+
 # Hist to analyze Glucose
 # hist(dataset$glucose, xlab="Glucose Levels", ylab="Frequency", col="yellow", border="black", main="Histogram of Glucose levels")
 
