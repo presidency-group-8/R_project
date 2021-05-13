@@ -138,7 +138,14 @@ submit_function = function(){
   
   if (loading$run() == GtkResponseType["ok"]){
     loading$destroy()  
-    predictor(name, age, gender, ever_married, work_type, residence_type, hypertension, heart_disease, smoking_type, glucose, bmi)
+    result = predictor(age, gender, ever_married, work_type, residence_type, hypertension, heart_disease, smoking_type, glucose, bmi)
+    if(result<0.0) risk = "extremely low"
+    if(result>0.0 && result<=0.13) risk = "low"
+    if(result>0.13 && result<=0.38) risk = "moderate"
+    if(result>0.38 && result<=0.75) risk = "high"
+    if(result>0.75) risk = "extremely high"
+    result = paste("Dear ", gtkEntryGetText(name), " The risk of you having a stroke in the future is ", risk)
+    show = gtkMessageDialog(window, "destroy-with-parent", "info",  "ok", result)
   }
   
   else{
