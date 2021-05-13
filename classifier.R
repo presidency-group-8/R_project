@@ -1,6 +1,7 @@
 library(rpart)
 library(rpart.plot)
-
+library(caTools)
+library(ggplot2)
 stroke_data_set = read.csv("stroke-dataset.csv")
 
 
@@ -56,7 +57,13 @@ testing = function(test_set, model){
   result = (table(ActualValue=test_set$stroke, PreditedValue=result>=0.7))
   print("TESTING DONE")
   print("Confusion Matrix")
-  print(result)
+  
+  # id = seq(1, nrow(test_set))
+  # test_set$id = id
+  # test_set$predictions = result
+  # ggplot(data=test_set, aes(x=id, y=result)) + geom_point() + ggtitle("Prediction - No Stroke")
+  
+  return(result)
 }
 
 
@@ -112,7 +119,9 @@ predictor = function(age, gender, ever_married, work_type, residence_type, hyper
   inp = data.frame('gender'=gender, 'age'=iage, 'hyper'=ihypertension, 'heart'=iheart_disease, 
                    'marital'=marital, 'worktype'=iwork_type, 'residence'=residence_type, 
                    'glucose'=iglucose, 'bmi'=ibmi, 'smoking'= ismoking_type)
+  print(inp)
   result = predict(model, inp)
+  print(as.numeric(result[1][1]))
   return(as.numeric(result[1][1]))
 }
 
@@ -121,8 +130,7 @@ predictor = function(age, gender, ever_married, work_type, residence_type, hyper
 data_set = preprocessing()
 
 # load the model
-model = rpart(formula = stroke ~ ., data = data_set)
-rpart.plot(model)
+# model = rpart(formula = stroke ~ ., data = data_set)
+# rpart.plot(model)
 
 model = glm(formula = stroke ~ ., data = data_set)
-
