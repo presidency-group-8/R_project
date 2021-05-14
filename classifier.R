@@ -1,10 +1,14 @@
+# Import libraries
 library(rpart)
 library(rpart.plot)
 library(caTools)
 library(ggplot2)
+
+# Load the dataset
 stroke_data_set = read.csv("stroke-dataset.csv")
 
 
+# Data pre-processing
 preprocessing = function(){
   # Remove ID column
   dataset = stroke_data_set[, 2:12]
@@ -39,11 +43,13 @@ preprocessing = function(){
   # Display the data set
   print(head(dataset))
   
+  # Return back the pre-processed data
   return(dataset)
   
 }
 
 
+# Training the model
 training = function(train_set){
   # model = rpart(formula = stroke~., data = train_set)
   model = glm(formula = stroke ~ ., data = train_set)
@@ -52,6 +58,7 @@ training = function(train_set){
 }
 
 
+# Testing the model
 testing = function(test_set, model){
   result = predict(model, test_set)
   result = (table(ActualValue=test_set$stroke, PreditedValue=result>=0.7))
@@ -67,6 +74,7 @@ testing = function(test_set, model){
 }
 
 
+# Train and Test data
 train_and_test = function(model_name, data_set){
   # Shuffle the data set
   set.seed(101)
@@ -85,43 +93,39 @@ train_and_test = function(model_name, data_set){
 }
 
 
+# Predict the output fir the given inout
 predictor = function(age, gender, ever_married, work_type, residence_type, hypertension, heart_disease, smoking_type, glucose, bmi){
+  # Fetch all data
   gender = gtkComboBoxGetActiveText(gender)
   marital = gtkComboBoxGetActiveText(ever_married)
   residence_type = gtkComboBoxGetActiveText(residence_type)
-  
   age = gtkEntryGetText(age)
   iage = as.numeric(age)
-  
   work_type = gtkComboBoxGetActiveText(work_type)
   if(work_type == "Government") iwork_type = "Govt_job"
   else iwork_type = work_type
-  
   hypertension = gtkComboBoxGetActiveText(hypertension)
   if(hypertension == "Yes") ihypertension = 1
   if(hypertension == "No") ihypertension = 0
-    
   heart_disease = gtkComboBoxGetActiveText(heart_disease)
   if(heart_disease == "Yes") iheart_disease = 1
   if(heart_disease == "No") iheart_disease = 0
-
   smoking_type = gtkComboBoxGetActiveText(smoking_type)
   if(smoking_type == "Currently Smokes") ismoking_type = "smokes"
   if(smoking_type == "Formerly Smoked") ismoking_type = "formerly smoked"
   if(smoking_type == "Never Smoked") ismoking_type = "never smoked"
-    
   glucose = gtkEntryGetText(glucose)
   iglucose = as.numeric(glucose)
-  
   bmi = gtkEntryGetText(bmi)
   ibmi = as.numeric(bmi)
     
+  # Generate a dataframe using input data
   inp = data.frame('gender'=gender, 'age'=iage, 'hyper'=ihypertension, 'heart'=iheart_disease, 
                    'marital'=marital, 'worktype'=iwork_type, 'residence'=residence_type, 
                    'glucose'=iglucose, 'bmi'=ibmi, 'smoking'= ismoking_type)
-  print(inp)
+  
+  # Predict the output
   result = predict(model, inp)
-  print(as.numeric(result[1][1]))
   return(as.numeric(result[1][1]))
 }
 
@@ -130,7 +134,10 @@ predictor = function(age, gender, ever_married, work_type, residence_type, hyper
 data_set = preprocessing()
 
 # load the model
+
+# The DT model
 # model = rpart(formula = stroke ~ ., data = data_set)
 # rpart.plot(model)
 
+# The Logistic Regresson
 model = glm(formula = stroke ~ ., data = data_set)
