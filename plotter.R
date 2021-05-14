@@ -1,8 +1,11 @@
+# Import libraries
 library(ggplot2)
 library(plotrix)
 
+# Load the dataset
 stroke_data_set = read.csv("stroke-dataset.csv")
 
+# Data pre-processing
 preprocessing = function(){
   # Remove ID column
   dataset = stroke_data_set[, 2:12]
@@ -39,13 +42,14 @@ preprocessing = function(){
   rows = sample(nrow(dataset))
   dataset = dataset[rows, ]
   
+  # Return pre-processed data
   return(dataset)
   
 }
 
 dataset = preprocessing()
 
-# Uncomment the required plot to vizualize
+# Un-comment the required plot to visualize
 
 # Pie to analyze Class labels
 # stroke_1 = nrow(dataset[dataset$stroke == 1,])
@@ -60,6 +64,7 @@ dataset = preprocessing()
 # Scatter plot to analyze Age vs stroke
 # ggplot(data=dataset, aes(x=stroke, y=age, color="green")) + geom_point()
 
+# Subset of the dataset where class label is STROKE
 stroke_positive = dataset[dataset$stroke == 1,]
 
 # Bar to analyze Gender
